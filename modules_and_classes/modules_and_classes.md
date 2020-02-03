@@ -1,9 +1,23 @@
 # Modules, Classes and Inheritance
 By: Briant Gale
 
+Example Repo: [Joke Generator](https://github.com/briantgale/joke_generator)
+
+## Introduction
 This tutorial/training covers the topic of organizing code efficiently by properly using modules and classes.
 
-https://github.com/briantgale/joke_generator
+### Sample Project Requirements
+
+* A gem that can be used to tell jokes
+* Should be able to specify the type of jokes
+* Should be able to return the source of the joke
+* Should be able to return multiple jokes at once
+
+### Sample Code - First attempt
+[Joke Generator, Branch 1](https://github.com/briantgale/joke_generator/tree/1)
+
+* **What are the problems with this code?**
+* **What are the obvious improvements that can be made?**
 
 ## Modules
 Modules have 2 main purposes:
@@ -28,7 +42,7 @@ Easy Improvements:
 Example:
 
 ```ruby
-module 
+module
 
 ```
 
