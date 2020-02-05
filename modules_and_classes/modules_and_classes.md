@@ -1,8 +1,10 @@
-# Modules, Classes and Inheritance
+# Modules and Classes
 
 By: Briant Gale
 
 Example Repo: [Joke Generator](https://github.com/briantgale/joke_generator)
+
+The overall goal of this training is to demonstrate skills for building organized, object-oriented applications using plain Ruby.
 
 ## 1. Introduction
 
@@ -32,7 +34,8 @@ To get started, I wanted to find something fun to build out to demonstrate some 
 * Should be able to return the source of the joke
 * Should be able to return multiple jokes at once
 
-### Sample Code - First attempt
+### First attempt at a script
+
 [Joke Generator, Branch 1](https://github.com/briantgale/joke_generator/tree/1)
 
 Run the script:
@@ -87,6 +90,8 @@ joke_generator
     └── joke_generator.rb
 ```
 
+[Joke Generator, Branch 2](https://github.com/briantgale/joke_generator/tree/2)
+
 I moved my original "script" version of the joke generator into the `JokeGenerator` module to get things moved. Additionally, I split things up into small methods.
 
 **What improvements were made?**
@@ -122,11 +127,41 @@ The first obvious adjustment we can make to our code is to identify the basic cl
 
 ![Basic Module with Classes](./basic_module_and_classes.png)
 
-Notice the following
+Starting from branch 2, make the following changes to the code:
+
+Create `lib/joke_generator/dad_joke.rb`
+
+```ruby
+class JokeGenerator::DadJoke
+
+  def joke
+    response = RestClient.get("https://icanhazdadjoke.com/", {accept: :json})
+    JSON.parse(response.body)["joke"]
+  end
+
+end
+```
+
+Add these to `lib/joke_generator.rb`
+
+```ruby
+require "joke_generator/dad_joke"
+```
+
+Line 20 changes to:
+```ruby
+puts JokeGenerator::DadJoke.new.joke
+```
 
 [Joke Generator, Branch 3](https://github.com/briantgale/joke_generator/tree/3)
 
-We've previously discussed the problems of the first 2 iterations of code. In order to make improvements, we need to break down the problem, and devise a structure for our app to make more sense
+We've previously discussed the problems of the first 2 iterations of code. In order to make improvements, we need to break down the problem, and devise a structure for our app to make more sense. There's a few other improvements we could make to the structure of our code:
+
+* Abstract out the common functionality, like the api call
+* Make the URL, and path to the joke in the response part of the parent class
+* Override that logic for the programmer joke class
+
+### Abstract out common functionality
 
 
 
