@@ -167,7 +167,6 @@ Inheritance gives us the ability to move common methods into a single place, the
 
 ![Classes with inheritance](./classes_with_inheritance.png)
 
-
 **Move common functionality**
 
 What functionality can we move to the superclass?
@@ -246,7 +245,11 @@ The code should now be in this state: [Joke Generator, Branch 4](https://github.
 
 ### Rebuilding our interface
 
-Once you've made sense of the data, and organized it, it's time to adjust our interface to the data, based on our requirements, we can tell a joke and specify the type of joke. We just need to be able to return multiple jokes. Since our classes are now organized, we can easily make some methods on our module to access the data we want.
+Once you've made sense of the data, and organized it, it's time to adjust our interface to the data, based on our requirements. While not completely necessary, it's nice to define an interface that we can use. This makes it nice so that if/when changes need to be made, the consumers don't need to know what changed behind the scenes.
+
+![Modules and Classes with Interface Methods](./modules_classes_with_interface_methods.png)
+
+Currently, we can tell a joke and specify the type of joke. We just need to be able to return multiple jokes. Since our classes are now organized, we can easily make some methods on our module to access the data we want.
 
 Add the following to `lib/joke_generator/joke_service.rb`:
 
