@@ -4,9 +4,13 @@ By: Briant Gale
 
 Example Repo: [Joke Generator](https://github.com/briantgale/joke_generator)
 
-The overall goal of this training is to demonstrate skills for building organized, object-oriented applications using plain Ruby.
-
 ## 1. Introduction
+
+### Goal
+
+The overall goal of this training is to demonstrate skills for understanding and building organized, object-oriented applications using plain Ruby.
+
+### The Basics
 
 Properly organizing code into modules and classes helps build maintainable code. There's a few high level concepts to understand:
 
@@ -18,12 +22,12 @@ Properly organizing code into modules and classes helps build maintainable code.
 
 A few things to keep in mind:
 
-* A good portion of Rails is just basic Ruby
+* A good portion of Rails is just basic Ruby, and follows these patterns. Once you see what's going on, the magic starts to make more sense.
 * Rails has given us a good model (no pun intended) to follow to keep our code organized, we need to respect that to keep our code clean.
   * A firm understanding of MVC helps up keep our code clean.
   * If it feels like code doesn't fit somewhere, it might be worth finding a better place for it.
   * The rails magic that we use is really just a lesson in efficient code design. E.G. concerns are just modules with a little extra help mixed in.
-* Taking extra time out to understand the structure of something means that coming back later will be much simpler.
+* Taking extra time out to understand the structure of something means that coming back later to make adjustments will be less confusing.
 
 ### Sample Project Requirements
 
@@ -45,11 +49,11 @@ ruby tell_a_joke.rb
 ```
 
 **What are the problems with this code?**
-* Code is duplicated
-* I'm not able to get multiple jokes back in a single call
-* There's no obvious structure
-* Adding a new joke service would be tricky, as there are multiple places to add it. In a larger code based, that wouldn't be as apparent.
-* There is no easy interface to access a joke from another application.
+* Code is duplicated.
+* I'm not able to get multiple jokes back in a single call, adding that functionality would likely make the code more confusing.
+* There's no obvious structure.
+* Adding a new joke service would be tricky, as there are multiple places to add it. In a more complicated versions, that wouldn't be as apparent.
+* There is no easy interface to access a joke from within anoth Ruby another application.
 
 **What are the obvious improvements that can be made?**
 * Organize code into some methods to make it more expandable
@@ -59,10 +63,10 @@ ruby tell_a_joke.rb
 
 Modules have 2 main purposes:
 1. Namespacing code
-  * This gives us a way to organize our code
-  * Prevents namespace collisions
+  * This gives us a way to organize our code and build a heirarchy.
+  * Prevents namespace collisions - Classes can have the same name if they're namespaced properly.
 1. Mixin functionality
-  * We can consolidate methods that might be usefull across multiple classes into a single place, then include that functionality later
+  * We can consolidate methods that might be usefull across multiple classes into a single place, then include that functionality later.
 
 **Modules are not instantiated, and therefore cannot have multiple instances.**
 
@@ -74,6 +78,7 @@ bundle gem joke_generator
 ```
 
 This gives us the following file structure:
+
 ```
 joke_generator
 ├── Gemfile
@@ -92,17 +97,17 @@ joke_generator
 
 [Joke Generator, Branch 2](https://github.com/briantgale/joke_generator/tree/2)
 
-I moved my original "script" version of the joke generator into the `JokeGenerator` module to get things moved. Additionally, I split things up into small methods.
+I moved my original "script" version of the joke generator into the `JokeGenerator` module to get things moving. Additionally, I split things up into small methods.
 
 **What improvements were made?**
-* Code is organized into methods
-* Wrapping up the code in a module makes it easier to use in other code
+* Code is organized into methods.
+* Wrapping up the code in a module makes it easier to use in other code.
 
 **What are the problems with this code?**
-* We still haven't solved for duplicated code
-* It's still hard to add additional services to this code
-* There is still no logical organization
-* Asking for multiple jokes would require wrapping up our code in a loop
+* We still haven't solved for duplicated code.
+* It's still hard to add additional services to this code.
+* There is still no logical organization, methods might not necessarily go with each other.
+* Asking for multiple jokes would require wrapping up our code in a loop, still causing us some grief.
 
 ## 3. Classes
 
@@ -110,6 +115,7 @@ I moved my original "script" version of the joke generator into the `JokeGenerat
 * Allows us to add consistency to the way our application behaves by consolidating code
 * Allows us to further organize our code into logical groups
 * Allows for inheritance and structuring of like objects
+* Allows for the ability to encapsulate functionality, exposing only the pieces we want to share
 
 Our joke generator has the following structure. It's simple, but is missing a few features that allow us to accomplish our task.
 
@@ -153,15 +159,15 @@ Line 20 changes to:
 puts JokeGenerator::DadJoke.new.joke
 ```
 
-[Joke Generator, Branch 3](https://github.com/briantgale/joke_generator/tree/3)
+This is the beginnings of moving our code to a object-oriented solution. We're beginning to move code into classes that better represent the data structure. [Joke Generator, Branch 3](https://github.com/briantgale/joke_generator/tree/3) is what the code looks like after all the classes have been migrated.
 
-We've previously discussed the problems of the first 2 iterations of code. In order to make improvements, we need to break down the problem, and devise a structure for our app to make more sense. There's a few other improvements we could make to the structure of our code:
+### Abstract out common functionality
+
+Moving our code into classes in this way has given us a better structure than the plain script and module versions of the code. Each class has a `joke` method, making accessing a joke much simpler. This solution moves us in the right direction, and makes more sense. The next step should be to further optimize our code. The obvious things that we can do to further improve include:
 
 * Abstract out the common functionality, like the api call
 * Make the URL, and path to the joke in the response part of the parent class
 * Override that logic for the programmer joke class
-
-### Abstract out common functionality
 
 Inheritance gives us the ability to move common methods into a single place, then we can use those methods in our child classes, or override them if we want to implement custom functionality.
 
@@ -197,9 +203,7 @@ class JokeGenerator::JokeService
   end
 end
 ```
-
 This moves the api call to the initialize method, and stores the resulting joke as an instance variable.
-
 
 Make sure that our new superclass is required and avaiable for the child classes. Add this to `lib/joke_generator.rb`:
 
